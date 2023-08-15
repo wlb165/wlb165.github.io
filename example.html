@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeting App</title>
+</head>
+<body>
+    <div>
+        <label for="nameInput">Enter Your Name:</label>
+        <input type="text" id="nameInput">
+        <button id="greetButton">Greet</button>
+    </div>
+    <div>
+        <p id="greeting"></p>
+    </div>
+
+    <script>
+        const nameInput = document.getElementById('nameInput');
+        const greetButton = document.getElementById('greetButton');
+        const greetingElement = document.getElementById('greeting');
+
+        greetButton.addEventListener('click', async () => {
+            const name = nameInput.value;
+
+            const response = await fetch('http://10.192.105.24:3000/api/greet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name })
+            });
+
+            const data = await response.json();
+            greetingElement.textContent = data.greeting;
+        });
+    </script>
+</body>
+</html>
+
